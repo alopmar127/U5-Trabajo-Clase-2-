@@ -1,6 +1,12 @@
 <?php
 
+
 namespace App\Models;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
 
 /**
  * Gestiona la conexión de la base de datos e incluye un esquema para
@@ -10,10 +16,16 @@ namespace App\Models;
 
 class Model
 {
-    protected $db_host = 'localhost';
-    protected $db_user = 'root'; // Las credenciales se deben guardar en un archivo .env
-    protected $db_pass = '';
-    protected $db_name = 'mvc_database';
+
+    protected $db_host;
+    protected $db_user;
+    protected $db_pass;
+    protected $db_name;
+
+    // protected $db_host = $_ENV['DB_HOST'];
+    // protected $db_user =  $_ENV['DB_USER']; // Las credenciales se deben guardar en un archivo .env
+    // protected $db_pass =  $_ENV['DB_PASS'];
+    // protected $db_name =  $_ENV['DB_NAME'];
 
     protected $connection;
 
@@ -32,8 +44,36 @@ class Model
 
     public function connection()
     {
-        // Conexión a la base de datos, por hacer
+        // Cargar variables de entorno
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv->load();
+
+        // Asignar las variables
+        $this->db_host = $_ENV['DB_HOST'];
+        $this->db_user = $_ENV['DB_USER'];
+        $this->db_pass = $_ENV['DB_PASS'];
+        $this->db_name = $_ENV['DB_NAME'];
+
+        // Mostrar para depuración
+        echo "Host: {$this->db_host}, User: {$this->db_user}, DB: {$this->db_name} <br>";
+
+        $this->connection = new \mysqli($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
+
+        // Verifica si la conexión falla
+        if ($this->connection->connect_error) {
+            die("Conexión fallida: " . $this->connection->connect_error);
+        }
     }
+
+    // public function prueba()
+    // {
+    //     $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+    //     $dotenv->load();
+    //     $db_host = $_ENV['DB_HOST'];
+    //     $db_user =  $_ENV['DB_USER']; // Las credenciales se deben guardar en un archivo .env
+    //     $db_pass =  $_ENV['DB_PASS'];
+    //     $db_name =  $_ENV['DB_NAME'];
+    // }
 
     // QUERY BUILDER
     // Consultas: 
