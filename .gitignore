@@ -98,6 +98,11 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+# ignorar archivo con credenciales
+*.env
+# ignorar carpeta vendor 
+vendor/
+
 # Chutzpah Test files
 _Chutzpah*
 
