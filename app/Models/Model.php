@@ -44,24 +44,30 @@ class Model
 
     public function connection()
     {
-        // Cargar variables de entorno
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-        $dotenv->load();
+        try {
 
-        // Asignar las variables
-        $this->db_host = $_ENV['DB_HOST'];
-        $this->db_user = $_ENV['DB_USER'];
-        $this->db_pass = $_ENV['DB_PASS'];
-        $this->db_name = $_ENV['DB_NAME'];
+            // Cargar variables de entorno
+            $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+            $dotenv->load();
 
-        // Mostrar para depuración
-        echo "Host: {$this->db_host}, User: {$this->db_user}, DB: {$this->db_name} <br>";
+            // Asignar las variables
+            $this->db_host = $_ENV['DB_HOST'];
+            $this->db_user = $_ENV['DB_USER'];
+            $this->db_pass = $_ENV['DB_PASS'];
+            $this->db_name = $_ENV['DB_NAME'];
 
-        $this->connection = new \mysqli($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
+            // Mostrar para depuración
+            echo "Host: {$this->db_host}, User: {$this->db_user}, DB: {$this->db_name} <br>";
 
-        // Verifica si la conexión falla
-        if ($this->connection->connect_error) {
-            die("Conexión fallida: " . $this->connection->connect_error);
+            // Crear conexión PDO
+            $dsn = "mysql:host={$this->db_host};dbname={$this->db_name};charset=utf8mb4";
+            $this->connection = new \PDO($dsn, $this->db_user, $this->db_pass);
+
+            // Configurar el manejo de errores
+            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            die("Error de conexión: " . $e->getMessage());
         }
     }
 
@@ -91,21 +97,18 @@ class Model
 
         // Si hay $data se lanzará una consulta preparada, en otro caso una normal
         // Está configurado para mysqli, cambiar para usar PDO
-        if ($data) {
-            if ($params == null) {
-                // s para string. sssd para 3 strings y un entero. https://www.php.net/manual/es/mysqli-stmt.bind-param.php
-                // por ejemplo: $stmt->bind_param('sssd', $code, $language, $official, $percent);
-                $params = str_repeat('s', count($data));
+        try {
+            // Si hay datos, usar consulta preparada
+            if ($data) {
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute($data);
+                $this->query = $stmt;
+            } else {
+                // Si no hay datos, ejecutar directamente
+                $this->query = $this->connection->query($sql);
             }
-            // Sentencia preparada, pasando array como parámetros
-            // Cambiar a PDO
-            $smtp = $this->connection->prepare($sql);
-            $smtp->bind_param($params, ...$data); // con ... el array cambia a variables
-            $smtp->execute();
-
-            $this->query = $smtp->get_result();
-        } else {
-            $this->query = $this->connection->query($sql);
+        } catch (\PDOException $e) {
+            die("Error en la consulta: " . $e->getMessage());
         }
 
         return $this;
@@ -145,13 +148,22 @@ class Model
 
             $this->query($sql, $this->values);
         }
+        // Devolver los resultados si existen
+        if ($this->query) {
+            return $this->query->fetchAll();
+            // Retorna un array asociativo
+        }
+
+        return [];
     }
 
     public function find($id)
     {
         $sql = "SELECT * FROM {$this->table} WHERE id = ?";
 
-        $this->query($sql, [$id], 'i');
+        $this->query($sql, [$id]);
+
+        return $this->query->fetch();
     }
 
     // Se añade where a la sentencia con operador específico
@@ -189,27 +201,19 @@ class Model
     // Insertar, recibimos un $_GET o $_POST
     public function create($data)
     {
-        $columns = array_keys($data); // array de claves del array
-        $columns = implode(', ', $columns); // y creamos una cadena separada por ,
+        $columns = implode(', ', array_keys($data));
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
 
-        $values = array_values($data); // array de los valores
+        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
 
-        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES (?" . str_repeat(',?', count($values) - 1) . ")";
-
-        $this->query($sql, $values, $values);
+        $this->query($sql, array_values($data));
 
         return $this;
     }
 
     public function update($id, $data)
     {
-        $fields = [];
-
-        foreach ($data as $key => $value) {
-            $fields[] = "{$key} = ?";
-        }
-
-        $fields = implode(', ', $fields);
+        $fields = implode(', ', array_map(fn($key) => "{$key} = ?", array_keys($data)));
 
         $sql = "UPDATE {$this->table} SET {$fields} WHERE id = ?";
 
@@ -217,6 +221,7 @@ class Model
         $values[] = $id;
 
         $this->query($sql, $values);
+
         return $this;
     }
 
@@ -224,7 +229,9 @@ class Model
     {
         $sql = "DELETE FROM {$this->table} WHERE id = ?";
 
-        $this->query($sql, [$id], 'i');
+        $this->query($sql, [$id]);
+
+        return $this;
     }
 
     // Para pruebas, devuelve como si fuese unan consulta, borrar
