@@ -5,6 +5,7 @@ namespace App\Productos;
 use App\Interfaces\VendibleInterface;
 
 //Clase abstracta debido a que implementa un metodo abstracto y además se definira mejor en sus clases hijas
+//Implementa la interface VendibleInterface para obligar a todas las clases hijas a tener un IVA definido y usar el metodo calcularPrecioConIVA
 abstract class Productos implements VendibleInterface
 {
 
