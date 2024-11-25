@@ -102,6 +102,9 @@ StyleCopReport.xml
 *.env
 # ignorar carpeta vendor 
 vendor/
+#ignorar archivo de composer lock
+composer.lock
+
 
 # Chutzpah Test files
 _Chutzpah*
