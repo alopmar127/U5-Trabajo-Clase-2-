@@ -21,7 +21,15 @@
     // mostrar la consulta SQL que se está ejecutando.
 
     // Consulta 
-    //  $usuarioModel->all();
+    // Obtener todos los usuarios en un array
+    $usuarios = $usuarioModel->all();
+
+    var_dump($usuarios);
+    echo "<br>";
+    // Mostrar los usuarios
+    foreach ($usuarios as $usuario) {
+        echo "ID: {$usuario['id']}, Nombre: {$usuario['nombre']}, Apellidos: {$usuario['apellidos']}<br>";
+    }
 
     // Consulta
     //$usuarioModel->select('columna1', 'columna2')->get();
@@ -41,14 +49,14 @@
     //              ->orderBy('columna1', 'DESC')
     //              ->get();
 
-    // Consulta
-    //  $usuarioModel->create(['id' => 1, 'nombre' => 'nombre1', 'apellidos' => 'apellidos1']);
+    // Consulta INSERTAR FUNCIONA
+    // $usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
 
-    // Consulta
-    //$usuarioModel->delete(['id' => 1]);
+    // Consulta DELETE FUNCIONA
+    //$usuarioModel->delete(6);
 
-    // Consulta
-    //  $usuarioModel->update(['id' => 1], ['nombre' => 'NombreCambiado']);
+    // Consulta UPDATE FUNCIONA 
+    //$usuarioModel->update(6, ['nombre' => 'NombreCambiado']);
 
     echo "Pruebas SQL Query Builder";
     ?>

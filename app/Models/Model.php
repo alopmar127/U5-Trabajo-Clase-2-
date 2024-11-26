@@ -125,10 +125,14 @@ class Model
     // Devuelve todos los registros de una tabla
     public function all()
     {
-        // La consulta sería
+        // SELECT ALL
         $sql = "SELECT * FROM {$this->table}";
-        // Y se llama a la sentencia
-        $this->query($sql)->get();
+
+        // Ejecuta la consulta
+        $this->query($sql);
+
+        // Retornar todos los resultados como un array asociativo
+        return $this->query->fetchAll();
     }
 
     // Consulta base a la que se irán añadiendo partes
