@@ -12,16 +12,20 @@
     <p class="header-paragraph">Pruebas de consultas (hacer scroll):</p>
     <?php
 
-    use App\Models\UsuarioModel; // Recuerda el uso del autoload.php
-
-    // Se instancia el modelo
-    $usuarioModel = new UsuarioModel();
+    //Decimos que usaremos la clase Empleados
+    // use App\Personas\Empleados;
+    // //Creamos un empleado nuevo, no hace falta id ya que la pone solo autoincrementando
+    // $empleado = new Empleados('Nombre3', 'Apellido3');
 
     // Descomentar consultas para ver la creación. Cuando se lanza execute hay código para
     // mostrar la consulta SQL que se está ejecutando.
 
     // Consulta 
     // Obtener todos los usuarios en un array
+    use App\Models\UsuarioModel; // Recuerda el uso del autoload.php
+
+    $usuarioModel = new UsuarioModel();
+
     $usuarios = $usuarioModel->all();
 
     var_dump($usuarios);
@@ -50,7 +54,7 @@
     //              ->get();
 
     // Consulta INSERTAR FUNCIONA
-    // $usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
+    //$usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
 
     // Consulta DELETE FUNCIONA
     //$usuarioModel->delete(6);
