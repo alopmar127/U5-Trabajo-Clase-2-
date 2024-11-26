@@ -12,10 +12,12 @@
     <p class="header-paragraph">Pruebas de consultas (hacer scroll):</p>
     <?php
 
+
     use App\Models\ProductosModel; // Recuerda el uso del autoload.php
 
     // Se instancia el modelo
     $productosModel = new ProductosModel();
+
 
     // Descomentar consultas para ver la creación. Cuando se lanza execute hay código para
     // mostrar la consulta SQL que se está ejecutando.
@@ -23,6 +25,7 @@
     // Consulta 
     // Obtener todos los usuarios en un array
     $productos = $productosModel->all();
+
 
     var_dump($productos);
     echo "<br>";
@@ -50,7 +53,7 @@
     //              ->get();
 
     // Consulta INSERTAR FUNCIONA
-    // $usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
+    //$usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
 
     // Consulta DELETE FUNCIONA
     //$usuarioModel->delete(6);
