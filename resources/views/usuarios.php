@@ -4,7 +4,7 @@
 <head>
 
     <head>
-        <?php $tituloPagina = 'Inicio';
+        <?php $tituloPagina = 'Uusarios';
         require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'head.php'; ?>
     </head>
 </head>
@@ -18,17 +18,7 @@
     <nav>
         <?php require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'nav.php'; ?>
     </nav>
-    <h1>Productos por Categoría</h1>
 
-    <!-- Mostrar productos de Ropa -->
-    <?php require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'datosRopa.php'; ?>
-
-
-    <!-- Mostrar productos de Comida -->
-    <?php require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'datosComida.php'; ?>
-
-    <!-- Mostrar productos de Electrónico -->
-    <?php require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'datosElectronico.php'; ?>
 
     <footer>
         <?php require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'footer.php'; ?>
