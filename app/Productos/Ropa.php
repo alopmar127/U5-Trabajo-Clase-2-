@@ -9,10 +9,12 @@ class Ropa extends Productos
     private String $talla;
 
     //Constructor
-    public function __construct(String $nombre, float $precio, String $talla)
+    public function __construct(String $id, String $nombre, float $precio, String $talla)
     {
         //Llamamos al constructor de la clase padre y le pasamos el nombre y el precio
-        parent::__construct($nombre, $precio);
+        parent::__construct($id, $nombre, $precio);
+        $this->talla = $talla;
+
     }
 
 

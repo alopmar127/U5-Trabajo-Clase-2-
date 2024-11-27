@@ -9,12 +9,18 @@ class Electronico extends Productos
     private String $modelo;
 
     //Constructor
-    public function __construct(String $nombre, float $precio, String $modelo)
+    public function __construct(String $id, String $nombre, float $precio, String $modelo)
     {
         //Llamamos al constructor de la clase padre y le pasamos el nombre y el precio
-        parent::__construct($nombre, $precio);
+        parent::__construct($id, $nombre, $precio);
+        $this->modelo = $modelo;
     }
 
+
+    public function getModelo(): string
+    {
+        return $this->modelo;
+    }
 
     //Funcion para mostrar la descripcion del producto electronico
     public function mostrarDescripcion(): void

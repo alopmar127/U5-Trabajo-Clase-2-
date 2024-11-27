@@ -10,11 +10,12 @@ class Comida extends Productos
     protected DateTime $caducidad;
 
     //Constructor
-    public function __construct(String $nombre, float $precio, DateTime $caducidad)
+    public function __construct(string $id, string $nombre, float $precio, DateTime $caducidad)
     {
-        //Llamamos al constructor de la clase padre y le pasamos el nombre y el precio
-        parent::__construct($nombre, $precio);
+        parent::__construct($id, $nombre, $precio);
+        $this->caducidad = $caducidad;
     }
+
     //Funcion extra para comprobar si un producto esta caducado
     public function comprobarCaducidad(): bool
     {
@@ -26,5 +27,10 @@ class Comida extends Productos
     public function mostrarDescripcion(): void
     {
         echo "El nombre del producto es: " . $this->getNombre() . " y su precio es: " . $this->getPrecio() . " y la fecha de caducidad es: " . $this->caducidad->format('Y-m-d');
+    }
+
+    public function getCaducidad(): DateTime
+    {
+        return $this->caducidad;
     }
 }

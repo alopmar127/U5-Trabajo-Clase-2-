@@ -2,7 +2,7 @@
 
 namespace App\Productos;
 
-use App\Interfaces\VendibleInterface;
+
 
 //Clase abstracta debido a que implementa un metodo abstracto y además se definira mejor en sus clases hijas
 //Implementa la interface VendibleInterface para obligar a todas las clases hijas a tener un IVA definido y usar el metodo calcularPrecioConIVA
@@ -16,7 +16,9 @@ abstract class Productos implements VendibleInterface
     public const IVA = 21;
 
     //Sintaxis Constructor Property Promotion
-    public function __construct(private string $id, private string $nombre, private float $precio) {}
+    public function __construct(private string $id, private string $nombre, private float $precio) {
+      
+    }
     //Metodo abstracto que definiremos en las clases hijas
     abstract public function mostrarDescripcion(): void;
 
@@ -25,6 +27,7 @@ abstract class Productos implements VendibleInterface
     {
         return $this->precio * (1 + self::IVA / 100);
     }
+
 
     public function getId(): string
     {
