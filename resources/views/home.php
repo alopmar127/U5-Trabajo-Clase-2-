@@ -12,23 +12,26 @@
     <p class="header-paragraph">Pruebas de consultas (hacer scroll):</p>
     <?php
 
-    use App\Models\UsuarioModel; // Recuerda el uso del autoload.php
+
+    use App\Models\ProductosModel; // Recuerda el uso del autoload.php
 
     // Se instancia el modelo
-    $usuarioModel = new UsuarioModel();
+    $productosModel = new ProductosModel();
+
 
     // Descomentar consultas para ver la creación. Cuando se lanza execute hay código para
     // mostrar la consulta SQL que se está ejecutando.
 
     // Consulta 
     // Obtener todos los usuarios en un array
-    $usuarios = $usuarioModel->all();
+    $productos = $productosModel->all();
 
-    var_dump($usuarios);
+
+    var_dump($productos);
     echo "<br>";
     // Mostrar los usuarios
-    foreach ($usuarios as $usuario) {
-        echo "ID: {$usuario['id']}, Nombre: {$usuario['nombre']}, Apellidos: {$usuario['apellidos']}<br>";
+    foreach ($productos as $producto) {
+        echo "ID: {$producto['id']}, Nombre: {$producto['nombre']}, Precio: {$producto['precio']}<br>";
     }
 
     // Consulta
@@ -50,7 +53,7 @@
     //              ->get();
 
     // Consulta INSERTAR FUNCIONA
-    // $usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
+    //$usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
 
     // Consulta DELETE FUNCIONA
     //$usuarioModel->delete(6);
