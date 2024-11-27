@@ -19,7 +19,7 @@ CREATE TABLE `electronico` (
 
 CREATE TABLE `comida` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `categoria` VARCHAR(255),
+  `caducidad` DATE,
   `id_p` VARCHAR(255) UNIQUE
 );
 

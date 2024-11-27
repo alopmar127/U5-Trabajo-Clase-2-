@@ -39,14 +39,10 @@ INSERT INTO `electronico` (`modelo`, `id_p`) VALUES
 ('Sony WH-1000XM4', 'P010'); -- Auriculares
 
 -- COMIDA
--- Insertamos productos en orden por categoría
--- Insertamos los productos de comida rápida
-INSERT INTO `comida` (`id_p`, `categoria`) VALUES
-('P011', 'Rápida'),  -- Pizza
-('P012', 'Rápida'),  -- Hamburguesa
-('P014', 'Rápida');  -- Tacos
-
--- Insertamos los productos de comida mediterránea
-INSERT INTO `comida` (`id_p`, `categoria`) VALUES
-('P013', 'Mediterránea'), -- Ensalada
-('P015', 'Mediterránea'); -- Paella
+-- Insertar los productos en la tabla comida con la caducidad antes de la id_p
+INSERT INTO `comida` (`caducidad`, `id_p`) VALUES
+('2024-12-02', 'P011'),  
+('2024-12-30', 'P012'), 
+('2024-12-29', 'P014'), 
+('2024-12-29', 'P013'),  
+('2024-12-01', 'P015');  
