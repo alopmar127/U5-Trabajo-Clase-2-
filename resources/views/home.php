@@ -108,7 +108,7 @@
 
 
     foreach ($comida as $comida) {
-        echo "Id producto: {$comida['comida_id']},  Nombre: {$comida['productos_nombre']}, Categoria: {$comida['comida_categoria']}, Precio: {$comida['productos_precio']}<br>";
+        echo "Id producto: {$comida['comida_id']},  Nombre: {$comida['productos_nombre']}, Caducidad: {$comida['comida_caducidad']}, Precio: {$comida['productos_precio']}<br>";
     }
 
     ?>
