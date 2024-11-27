@@ -59,7 +59,7 @@ class Model
             $this->db_name = $_ENV['DB_NAME'];
 
             // Mostrar para depuración
-            echo "Host: {$this->db_host}, User: {$this->db_user}, DB: {$this->db_name} <br>";
+            //echo "Host: {$this->db_host}, User: {$this->db_user}, DB: {$this->db_name} <br>";
 
             // Crear conexión PDO
             $dsn = "mysql:host={$this->db_host};dbname={$this->db_name};charset=utf8mb4";
@@ -89,13 +89,13 @@ class Model
     // Recibe la cadena de consulta y la ejecuta
     public function query($sql, $data = [], $params = null)
     {
-
-        echo "Consulta: {$sql} <br>"; // borrar, solo para ver ejemplo
+        // Mostrar para depuración
+       /*  echo "Consulta: {$sql} <br>"; // borrar, solo para ver ejemplo
         echo "Data: ";
         var_dump($data);
         echo "Params: ";
         var_dump($params);
-        echo "<br>";
+        echo "<br>"; */
 
         // Si hay $data se lanzará una consulta preparada, en otro caso una normal
         // Está configurado para mysqli, cambiar para usar PDO

@@ -4,125 +4,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Productos por Categoría</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .category {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .category h3 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            width: 250px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h4 {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .product-card p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .product-card .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .product-card .add-to-cart-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-card .add-to-cart-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .product-card .add-to-cart-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+    </style>
 </head>
 
 <body>
-    <p class="header-paragraph">Pruebas de consultas (hacer scroll):</p>
-    <?php
-
-
-    use App\Models\ProductosModel; // Recuerda el uso del autoload.php
-
-    // Se instancia el modelo
-    $productosModel = new ProductosModel();
-
-
-    // Descomentar consultas para ver la creación. Cuando se lanza execute hay código para
-    // mostrar la consulta SQL que se está ejecutando.
-
-    // Consulta 
-    // Obtener todos los usuarios en un array
-    $productos = $productosModel->all();
-
-
-    var_dump($productos);
-    echo "<br>";
-    // Mostrar los usuarios
-    foreach ($productos as $producto) {
-        echo "ID: {$producto['id']}, Nombre: {$producto['nombre']}, Precio: {$producto['precio']}<br>";
-    }
-
-    // Consulta
-    //$usuarioModel->select('columna1', 'columna2')->get();
-
-    // Consulta
-    //  $usuarioModel->select('columna1', 'columna2')
-    //              ->where('columna1', '>', '3')
-    //              ->orderBy('columna1', 'DESC')
-    //              ->get();
-
-    // Consulta
-    //  $usuarioModel->select('columna1', 'columna2')
-    //              ->where('columna1', '>', '3')
-    //              ->where('columna2', 'columna3')
-    //              ->where('columna2', 'columna3')
-    //              ->where('columna3', '!=', 'columna4', 'OR')
-    //              ->orderBy('columna1', 'DESC')
-    //              ->get();
-
-    // Consulta INSERTAR FUNCIONA
-    //$usuarioModel->create(['nombre' => 'nombre2', 'apellidos' => 'apellidos2', 'edad' => '20']);
-
-    // Consulta DELETE FUNCIONA
-    //$usuarioModel->delete(6);
-
-    // Consulta UPDATE FUNCIONA 
-    //$usuarioModel->update(6, ['nombre' => 'NombreCambiado']);
-
-    echo "Pruebas SQL Query Builder";
-
-
-
-    ?>
+    <h1>Productos por Categoría</h1>
 
     <?php
-
     use App\Models\RopaModel;
-    // Se instancia el modelo
-    $productosModel = new ProductosModel();
-
-
-    //Consultar ropa
-    $ropaModel = new RopaModel();
-    // $ropa = $ropaModel->all();
-
-    // foreach ($ropa as $ropa) {
-    //     $idp = $ropa['id_p'];
-    //     // $productosModel->find($idp);
-    //     $datos = $productosModel->select('nombre', 'precio')
-    //         ->where('id', '=', $idp)
-    //         ->get();
-    //     var_dump($datos);
-
-    //     echo "Id producto: {$ropa['id_p']}, Nombre: {$datos["nombre"]}, Precio: {$datos['precio']}<br>";
-    //     echo "Id producto: {$ropa['id_p']}, Talla: {$ropa['talla']}<br>";
-    // }
-    $ropa = $ropaModel->obtenerDatosConProducto();
-    echo "<h3>Ropa</h3>";
-    print_r($ropa);
-
-    foreach ($ropa as $ropa) {
-        echo "Id producto: {$ropa['ropa_id']},  Nombre: {$ropa['productos_nombre']}, Talla: {$ropa['ropa_talla']}, Precio: {$ropa['productos_precio']}<br>";
-    }
-
-    echo "<br>";
-
     use App\Models\ComidaModel;
-
-    $comidaModel = new ComidaModel();
-    $comida = $comidaModel->obtenerDatosConProducto();
-    echo "<h3>Comida</h3>";
-    print_r($comida);
-
-
-    foreach ($comida as $comida) {
-        echo "Id producto: {$comida['comida_id']},  Nombre: {$comida['productos_nombre']}, Caducidad: {$comida['comida_caducidad']}, Precio: {$comida['productos_precio']}<br>";
-    }
-
     use App\Models\ElectronicoModel;
 
+    // Instanciar los modelos
+    $ropaModel = new RopaModel();
+    $comidaModel = new ComidaModel();
     $electronicoModel = new ElectronicoModel();
+
+    // Obtener los productos por categoría
+    $ropa = $ropaModel->obtenerDatosConProducto();
+    $comida = $comidaModel->obtenerDatosConProducto();
     $electronico = $electronicoModel->obtenerDatosConProducto();
-    echo "<h3>Electronico</h3>";
-    print_r($electronico);
 
-
-    foreach ($electronico as $electronico) {
-        echo "Id producto: {$electronico['electronico_id']},  Nombre: {$electronico['productos_nombre']}, Modelo: {$electronico['electronico_modelo']}, Precio: {$electronico['productos_precio']}<br>";
+    // Mostrar productos de Ropa
+    echo "<div class='category'>";
+    echo "<h3>Ropa</h3>";
+    echo "<div class='product-list'>";
+    foreach ($ropa as $item) {
+        echo "<div class='product-card'>
+                <img src='img/ropa.jpg' alt='Imagen de ropa'>
+                <h4>{$item['productos_nombre']}</h4>
+                <p>Talla: {$item['ropa_talla']}</p>
+                <p class='price'>Precio: {$item['productos_precio']}€</p>
+                <button class='add-to-cart-btn'>Añadir al carrito</button>
+              </div>";
     }
+    echo "</div>";
+    echo "</div>";
+
+    // Mostrar productos de Comida
+    echo "<div class='category'>";
+    echo "<h3>Comida</h3>";
+    echo "<div class='product-list'>";
+    foreach ($comida as $item) {
+        echo "<div class='product-card'>
+                <img src='img/comida.jpg' alt='Imagen de comida'>
+                <h4>{$item['productos_nombre']}</h4>
+                <p>Caducidad: {$item['comida_caducidad']}</p>
+                <p class='price'>Precio: {$item['productos_precio']}€</p>
+                <button class='add-to-cart-btn'>Añadir al carrito</button>
+              </div>";
+    }
+    echo "</div>";
+    echo "</div>";
+
+    // Mostrar productos de Electrónico
+    echo "<div class='category'>";
+    echo "<h3>Electrónico</h3>";
+    echo "<div class='product-list'>";
+    foreach ($electronico as $item) {
+        echo "<div class='product-card'>
+                <img src='img/electronico.jpg' alt='Imagen de electrónico'>
+                <h4>{$item['productos_nombre']}</h4>
+                <p>Modelo: {$item['electronico_modelo']}</p>
+                <p class='price'>Precio: {$item['productos_precio']}€</p>
+                <button class='add-to-cart-btn'>Añadir al carrito</button>
+              </div>";
+    }
+    echo "</div>";
+    echo "</div>";
     ?>
+
 </body>
 
 </html>
