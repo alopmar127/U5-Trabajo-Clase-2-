@@ -62,6 +62,41 @@
     //$usuarioModel->update(6, ['nombre' => 'NombreCambiado']);
 
     echo "Pruebas SQL Query Builder";
+
+
+
+    ?>
+
+    <?php
+
+    use App\Models\RopaModel;
+    // Se instancia el modelo
+    $productosModel = new ProductosModel();
+
+
+    //Consultar ropa
+    $ropaModel = new RopaModel();
+    // $ropa = $ropaModel->all();
+
+    // foreach ($ropa as $ropa) {
+    //     $idp = $ropa['id_p'];
+    //     // $productosModel->find($idp);
+    //     $datos = $productosModel->select('nombre', 'precio')
+    //         ->where('id', '=', $idp)
+    //         ->get();
+    //     var_dump($datos);
+
+    //     echo "Id producto: {$ropa['id_p']}, Nombre: {$datos["nombre"]}, Precio: {$datos['precio']}<br>";
+    //     echo "Id producto: {$ropa['id_p']}, Talla: {$ropa['talla']}<br>";
+    // }
+    $ropa = $ropaModel->obtenerDatosConProducto();
+    echo "<h3>Ropa</h3>";
+    print_r($ropa);
+    //Array ( [0] => Array ( [ropa_id] => 1 [ropa_talla] => M [productos_id] => P001 [productos_nombre] => Camiseta [productos_precio] => 15.99 ) [1] => Array ( [ropa_id] => 2 [ropa_talla] => L [productos_id] => P002 [productos_nombre] => Pantalón [productos_precio] => 30.5 ) [2] => Array ( [ropa_id] => 3 [ropa_talla] => S [productos_id] => P003 [productos_nombre] => Sudadera [productos_precio] => 25 ) [3] => Array ( [ropa_id] => 4 [ropa_talla] => XL [productos_id] => P004 [productos_nombre] => Chaqueta [productos_precio] => 50 ) [4] => Array ( [ropa_id] => 5 [ropa_talla] => M [productos_id] => P005 [productos_nombre] => Zapatos [productos_precio] => 65 ) )
+    foreach ($ropa as $ropa) {
+        echo "Id producto: {$ropa['ropa_id']},  Nombre: {$ropa['productos_nombre']}, Talla: {$ropa['ropa_talla']}, Precio: {$ropa['productos_precio']}<br>";
+    }
+
     ?>
 </body>
 
