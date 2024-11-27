@@ -252,3 +252,88 @@ footer {
 .cart-actions button:hover {
   background-color: #2980b9;
 }
+
+.cart-container {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-container h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #333;
+  text-align: center;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info span {
+  font-size: 16px;
+  color: #666;
+}
+
+.cart-item-info span.product-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cart-item-actions button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-item-actions button:hover {
+  background-color: #c0392b;
+}
+
+.cart-total {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #2ecc71;
+  text-align: right;
+  margin-top: 20px;
+}
+
+.cart-actions {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.cart-actions button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-actions button:hover {
+  background-color: #2980b9;
+}
