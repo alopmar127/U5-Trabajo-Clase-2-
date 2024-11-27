@@ -92,9 +92,23 @@
     $ropa = $ropaModel->obtenerDatosConProducto();
     echo "<h3>Ropa</h3>";
     print_r($ropa);
-    //Array ( [0] => Array ( [ropa_id] => 1 [ropa_talla] => M [productos_id] => P001 [productos_nombre] => Camiseta [productos_precio] => 15.99 ) [1] => Array ( [ropa_id] => 2 [ropa_talla] => L [productos_id] => P002 [productos_nombre] => Pantalón [productos_precio] => 30.5 ) [2] => Array ( [ropa_id] => 3 [ropa_talla] => S [productos_id] => P003 [productos_nombre] => Sudadera [productos_precio] => 25 ) [3] => Array ( [ropa_id] => 4 [ropa_talla] => XL [productos_id] => P004 [productos_nombre] => Chaqueta [productos_precio] => 50 ) [4] => Array ( [ropa_id] => 5 [ropa_talla] => M [productos_id] => P005 [productos_nombre] => Zapatos [productos_precio] => 65 ) )
+
     foreach ($ropa as $ropa) {
         echo "Id producto: {$ropa['ropa_id']},  Nombre: {$ropa['productos_nombre']}, Talla: {$ropa['ropa_talla']}, Precio: {$ropa['productos_precio']}<br>";
+    }
+
+    echo "<br>";
+
+    use App\Models\ComidaModel;
+
+    $comidaModel = new ComidaModel();
+    $comida = $comidaModel->obtenerDatosConProducto();
+    echo "<h3>Comida</h3>";
+    print_r($comida);
+
+
+    foreach ($comida as $comida) {
+        echo "Id producto: {$comida['comida_id']},  Nombre: {$comida['productos_nombre']}, Categoria: {$comida['comida_categoria']}, Precio: {$comida['productos_precio']}<br>";
     }
 
     ?>
