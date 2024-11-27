@@ -36,6 +36,8 @@ class Model
     protected $orderBy;
 
     protected $table; // Definido en la clase hijo
+    protected $table2; // Definido en la clase hijo
+    protected $campoEspecifico; // Definido en la clase hijo
 
     public function __construct()  // Se puede modificar según montéis la conexión
     {
@@ -246,5 +248,31 @@ class Model
             ['id' => 1, 'nombre' => 'Nombre2', 'apellido' => 'Apellido2'],
             ['id' => 1, 'nombre' => 'Nombre3', 'apellido' => 'Apellido3']
         ];
+    }
+
+    public function joinTablas(array $camposTabla, array $camposRelacionados): array
+    {
+        // Validar que las propiedades necesarias estén definidas
+        if (!isset($this->table) || !isset($this->table2)) {
+            throw new \Exception('Las propiedades $table y $table2 deben definirse en la clase hija.');
+        }
+
+        // Convertir los campos en formato SQL
+        $selectTabla = implode(', ', array_map(fn($campo) => "{$this->table}.{$campo} AS {$this->table}_{$campo}", $camposTabla));
+        $selectRelacionados = implode(', ', array_map(fn($campo) => "{$this->table2}.{$campo} AS {$this->table2}_{$campo}", $camposRelacionados));
+
+        // Combinar los campos para el SELECT
+        $select = "{$selectTabla}, {$selectRelacionados}";
+
+        // Construcción de la consulta dinámica
+        $sql = "SELECT {$select}
+            FROM {$this->table}
+            INNER JOIN {$this->table2} ON {$this->table}.id_p = {$this->table2}.id";
+
+        // Ejecutar la consulta
+        $this->query($sql);
+
+        // Retornar los resultados
+        return $this->query->fetchAll();
     }
 }

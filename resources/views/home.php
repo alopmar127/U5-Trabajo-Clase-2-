@@ -62,6 +62,55 @@
     //$usuarioModel->update(6, ['nombre' => 'NombreCambiado']);
 
     echo "Pruebas SQL Query Builder";
+
+
+
+    ?>
+
+    <?php
+
+    use App\Models\RopaModel;
+    // Se instancia el modelo
+    $productosModel = new ProductosModel();
+
+
+    //Consultar ropa
+    $ropaModel = new RopaModel();
+    // $ropa = $ropaModel->all();
+
+    // foreach ($ropa as $ropa) {
+    //     $idp = $ropa['id_p'];
+    //     // $productosModel->find($idp);
+    //     $datos = $productosModel->select('nombre', 'precio')
+    //         ->where('id', '=', $idp)
+    //         ->get();
+    //     var_dump($datos);
+
+    //     echo "Id producto: {$ropa['id_p']}, Nombre: {$datos["nombre"]}, Precio: {$datos['precio']}<br>";
+    //     echo "Id producto: {$ropa['id_p']}, Talla: {$ropa['talla']}<br>";
+    // }
+    $ropa = $ropaModel->obtenerDatosConProducto();
+    echo "<h3>Ropa</h3>";
+    print_r($ropa);
+
+    foreach ($ropa as $ropa) {
+        echo "Id producto: {$ropa['ropa_id']},  Nombre: {$ropa['productos_nombre']}, Talla: {$ropa['ropa_talla']}, Precio: {$ropa['productos_precio']}<br>";
+    }
+
+    echo "<br>";
+
+    use App\Models\ComidaModel;
+
+    $comidaModel = new ComidaModel();
+    $comida = $comidaModel->obtenerDatosConProducto();
+    echo "<h3>Comida</h3>";
+    print_r($comida);
+
+
+    foreach ($comida as $comida) {
+        echo "Id producto: {$comida['comida_id']},  Nombre: {$comida['productos_nombre']}, Categoria: {$comida['comida_categoria']}, Precio: {$comida['productos_precio']}<br>";
+    }
+
     ?>
 </body>
 
