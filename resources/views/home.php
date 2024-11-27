@@ -111,6 +111,17 @@
         echo "Id producto: {$comida['comida_id']},  Nombre: {$comida['productos_nombre']}, Caducidad: {$comida['comida_caducidad']}, Precio: {$comida['productos_precio']}<br>";
     }
 
+    use App\Models\ElectronicoModel;
+
+    $electronicoModel = new ElectronicoModel();
+    $electronico = $electronicoModel->obtenerDatosConProducto();
+    echo "<h3>Electronico</h3>";
+    print_r($electronico);
+
+
+    foreach ($electronico as $electronico) {
+        echo "Id producto: {$electronico['electronico_id']},  Nombre: {$electronico['productos_nombre']}, Modelo: {$electronico['electronico_modelo']}, Precio: {$electronico['productos_precio']}<br>";
+    }
     ?>
 </body>
 

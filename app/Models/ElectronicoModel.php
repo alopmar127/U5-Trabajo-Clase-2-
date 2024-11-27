@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ComidaModel extends Model
+class ElectronicoModel extends Model
 {
     protected $table = 'electronico'; // Tabla secundaria
     protected $table2 = 'productos'; // Tabla principal
