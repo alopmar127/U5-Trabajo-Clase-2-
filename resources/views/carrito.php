@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['vaciar'])) {
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <p class="cart-total">Total con IVA: <?= $carrito->calcularTotal(); ?>€</p>
+                <p class="cart-total">Total con IVA: <?= round($carrito->calcularTotal(), 2); ?>€</p>
                 <div class="cart-actions">
                     <form method="POST" action="">
                         <input type="hidden" name="vaciar" value="1">
