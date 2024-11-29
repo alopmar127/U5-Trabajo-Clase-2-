@@ -64,8 +64,6 @@ $usuarios = $usuarioModel->all();
 // echo "</pre>";
 
 //formulario para buscar usuarios
-$find = $usuarioModel->find(1);
-var_dump($find);
 $find = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST['buscarid'])) {
     //usar el find
