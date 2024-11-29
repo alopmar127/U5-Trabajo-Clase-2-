@@ -69,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST
     //usar el find
     $id = (int)filtrar($_POST['id']);
     $find = $usuarioModel->find($id);
-    var_dump($find);
 }
 
 
