@@ -37,14 +37,18 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`) VALUES
-(1, 'test1', 'test1'),
-(13, 'test2', 'test2'),
-(14, 'test33', 'test3'),
-(15, 'test44', 'test4'),
-(17, 'test5', 'test5'),
-(18, 'test6', 'test6'),
-(19, 'test7', 'test7');
+INSERT INTO `usuarios` (`nombre`, `apellidos`) VALUES
+('Luis', 'García'),
+('María', 'López'),
+('Carlos', 'Pérez'),
+('Ana', 'Martínez'),
+('José', 'Rodríguez'),
+('Laura', 'González'),
+('Juan', 'Hernández'),
+('Elena', 'Fernández'),
+('Miguel', 'Sánchez'),
+('Isabel', 'Ramírez');
+
 
 --
 -- Índices para tablas volcadas
