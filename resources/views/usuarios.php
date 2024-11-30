@@ -75,23 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre'], $_POST['ape
 }
 
 
-//Ejemplo procedimiento con OUT para el total de usuarios
-$mensajeTotal = "";
-try{
-$usuarioTransa->iniciarTransaccion();
-
-$parametrostotal = [
-    'totalUsuarios' => ['tipo' => 'OUT']
-];
-
-$total = $usuarioTransa->ejecutarProcedimiento('contarUsuarios', $parametrostotal);
-$usuarioTransa->confirmarTransaccion();
-$mensajeTotal = "El número total de usuarios es: " . $total['totalUsuarios'];
-} catch (\Exception $e) {
-    $usuarioTransa->deshacerTransaccion();
-    $mensajeTotal =  "Error al buscar el usuario: " . $e->getMessage();
-}
-
 $usuarioModel = new UsuarioModel();
 $mensajeBuscar = "";
 $datosbuscados = [];
@@ -285,7 +268,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST
     <?php if ($mensajeEliminar): ?>
         <p><?= $mensajeEliminar ?></p>
     <?php endif; ?>
-    <h2>Total de Usuarios</h2>
+    <h2>Total de Usuarios con procedimiento OUT</h2>
+    <?php
+
+    //Ejemplo procedimiento con OUT para el total de usuarios
+    $mensajeTotal = "";
+    try {
+        $usuarioTransa->iniciarTransaccion();
+
+        $parametrostotal = [
+            'totalUsuarios' => ['tipo' => 'OUT']
+        ];
+
+        $total = $usuarioTransa->ejecutarProcedimiento('contarUsuarios', $parametrostotal);
+        $usuarioTransa->confirmarTransaccion();
+        $mensajeTotal = "El número total de usuarios es: " . $total['totalUsuarios'];
+    } catch (\Exception $e) {
+        $usuarioTransa->deshacerTransaccion();
+        $mensajeTotal =  "Error al buscar el usuario: " . $e->getMessage();
+    }
+
+    ?>
     <?php if ($mensajeTotal): ?>
         <p><?= $mensajeTotal ?></p>
     <?php endif; ?>
