@@ -2,10 +2,15 @@
 
 namespace App\Productos;
 
+use App\Traits\Descuento;
+
+
 use DateTime;
 
 class Comida extends Productos
 {
+    //Utilizamos el trait Descuento para poder aplicar descuento
+    use Descuento;
     //Atributo caducidad de la comida
     protected DateTime $caducidad;
 
@@ -32,5 +37,12 @@ class Comida extends Productos
     public function getCaducidad(): DateTime
     {
         return $this->caducidad;
+    }
+
+    // Sobrescribimos calcularPrecioConIVA para aplicar el descuento
+    public function calcularPrecioConIVA(): float
+    {
+        $precioBase = parent::calcularPrecioConIVA();
+        return $this->aplicarDescuento($precioBase);
     }
 }

@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Productos;
+use App\Traits\Descuento;
 
 
 class Electronico extends Productos
 {
+    //Utilizamos el trait Descuento para poder aplicar descuento
+    use Descuento;
     //Atributo modelo
     private String $modelo;
 
@@ -27,4 +30,11 @@ class Electronico extends Productos
     {
         echo "El nombre del producto es: " . $this->getNombre() . " y su precio es: " . $this->getPrecio() . " y el modelo es: " . $this->modelo;
     }
+
+            // Sobrescribimos calcularPrecioConIVA para aplicar el descuento
+            public function calcularPrecioConIVA(): float
+            {
+                $precioBase = parent::calcularPrecioConIVA();
+                return $this->aplicarDescuento($precioBase);
+            }
 }
