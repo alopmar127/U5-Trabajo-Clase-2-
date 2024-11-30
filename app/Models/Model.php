@@ -17,10 +17,10 @@ use Dotenv\Dotenv;
 class Model
 {
 
-    protected $db_host;
-    protected $db_user;
-    protected $db_pass;
-    protected $db_name;
+    private string $db_host;
+    private string $db_user;
+    private string $db_pass;
+    private string $db_name;
 
     // protected $db_host = $_ENV['DB_HOST'];
     // protected $db_user =  $_ENV['DB_USER']; // Las credenciales se deben guardar en un archivo .env
@@ -90,7 +90,7 @@ class Model
     public function query($sql, $data = [], $params = null)
     {
         // Mostrar para depuración
-       /*  echo "Consulta: {$sql} <br>"; // borrar, solo para ver ejemplo
+        /*  echo "Consulta: {$sql} <br>"; // borrar, solo para ver ejemplo
         echo "Data: ";
         var_dump($data);
         echo "Params: ";
@@ -125,7 +125,7 @@ class Model
     }
 
     // Devuelve todos los registros de una tabla
-    public function all()
+    public function all(): array
     {
         // SELECT ALL
         $sql = "SELECT * FROM {$this->table}";
@@ -163,7 +163,7 @@ class Model
         return [];
     }
 
-    public function find($id)
+    public function find($id): ?array
     {
         $sql = "SELECT * FROM {$this->table} WHERE id = ?";
 
@@ -175,22 +175,34 @@ class Model
     // Se añade where a la sentencia con operador específico
     public function where($column, $operator, $value = null, $chainType = 'AND')
     {
-        if ($value == null) { // Si no se pasa operador, por defecto =
+        if ($value === null) {
             $value = $operator;
             $operator = '=';
         }
-
-        // Si ya había algo de antes 
-        if ($this->where) {
-            $this->where .= " {$chainType} {$column} {$operator} ?";
+    
+        $operator = strtoupper($operator);
+    
+        if (in_array($operator, ['IN', 'NOT IN']) && is_array($value)) {
+            $placeholders = implode(', ', array_fill(0, count($value), '?'));
+            $condition = "{$column} {$operator} ({$placeholders})";
+            $this->values = array_merge($this->values, $value);
+        } elseif ($operator == 'BETWEEN' && is_array($value) && count($value) == 2) {
+            $condition = "{$column} BETWEEN ? AND ?";
+            $this->values = array_merge($this->values, $value);
         } else {
-            $this->where = "{$column} {$operator} ?";
+            $condition = "{$column} {$operator} ?";
+            $this->values[] = $value;
         }
-
-        $this->values[] = $value;
-
+    
+        if ($this->where) {
+            $this->where .= " {$chainType} {$condition}";
+        } else {
+            $this->where = $condition;
+        }
+    
         return $this;
     }
+    
 
     // Se añade orderBy a la sentencia
     public function orderBy($column, $order = 'ASC')
@@ -274,5 +286,90 @@ class Model
 
         // Retornar los resultados
         return $this->query->fetchAll();
+    }
+
+
+    //Añadido para transacciones, rollback y commit
+    /**
+     * Función que utiliza el método where para filtrar resultados.
+     * @param string $columna Nombre de la columna para filtrar.
+     * @param mixed $valor Valor a buscar en la columna.
+     * @return array Resultados de la consulta.
+     */
+    public function obtenerPorCampo($columna, $operador, $valor)
+    {
+        return $this->where($columna, $operador, $valor)->get();
+    }
+
+
+    //Inicia una transacción en la base de datos.
+    public function iniciarTransaccion()
+    {
+        $this->connection->beginTransaction();
+    }
+
+    
+    //Confirma los cambios realizados durante la transacción.
+
+    public function confirmarTransaccion()
+    {
+        $this->connection->commit();
+    }
+
+    //Hacer rollback de transaccion
+    public function deshacerTransaccion()
+    {
+        $this->connection->rollBack();
+    }
+
+    /**
+     * Ejecuta un procedimiento almacenado de forma genérica.
+     * @param string $nombreProcedimiento Nombre del procedimiento almacenado.
+     * @param array $parametros Array de parámetros con tipo y valor.
+     * @return array Resultados de los parámetros OUT e INOUT.
+     */
+    public function ejecutarProcedimiento($nombreProcedimiento, $parametros = [])
+    {
+        $placeholders = [];
+        $valores = [];
+
+        foreach ($parametros as $nombre => $parametro) {
+            if ($parametro['tipo'] == 'IN') {
+                $placeholders[] = ":{$nombre}";
+                $valores[$nombre] = $parametro['valor'];
+            } elseif ($parametro['tipo'] == 'OUT' || $parametro['tipo'] == 'INOUT') {
+                $placeholders[] = "@{$nombre}";
+                if ($parametro['tipo'] == 'INOUT') {
+                    // Para INOUT, asignar el valor inicial
+                    $this->connection->query("SET @{$nombre} = {$parametro['valor']}");
+                }
+            }
+        }
+
+        $placeholderString = implode(', ', $placeholders);
+        $sql = "CALL {$nombreProcedimiento}({$placeholderString})";
+
+        $stmt = $this->connection->prepare($sql);
+
+        // Vincular parámetros IN
+        foreach ($parametros as $nombre => $parametro) {
+            if ($parametro['tipo'] == 'IN') {
+                $stmt->bindValue(":{$nombre}", $parametro['valor']);
+            }
+        }
+
+        // Ejecutar el procedimiento
+        $stmt->execute();
+
+        // Obtener los valores de los parámetros OUT e INOUT
+        $resultados = [];
+        foreach ($parametros as $nombre => $parametro) {
+            if ($parametro['tipo'] == 'OUT' || $parametro['tipo'] == 'INOUT') {
+                $resultado = $this->connection->query("SELECT @{$nombre} AS {$nombre}")->fetch();
+                $resultados[$nombre] = $resultado[$nombre];
+            }
+        }
+
+        return $resultados;
     }
 }
