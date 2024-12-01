@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 
 use App\Models\RopaModel;
 
@@ -11,6 +13,7 @@ $ropa = $ropaModel->obtenerDatosConProducto();
 // Mostrar productos de ropa
 echo "<div class='category'>";
 echo "<h3>Ropa</h3>";
+echo "<h5>Descuento del 10%</h5>";
 echo "<div class='product-list'>";
 foreach ($ropa as $item) {
     echo "<div class='product-card'>

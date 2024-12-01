@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../resources/includes/filtrar.php';
 
@@ -14,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Agregar producto al carrito
     if (isset($_POST['id'], $_POST['nombre'], $_POST['precio'])) {
         //Filtramos los datos
-        $id = filtrar($_POST['id']);
+        $id = strval(filtrar($_POST['id']));
         $nombre = strval(filtrar($_POST['nombre']));
         $precio = floatval(filtrar($_POST['precio']));
 
@@ -125,21 +127,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php $producto = $item['producto']; ?>
                         <li class="cart-item">
                             <div class="cart-item-info">
-                                <span class="product-name"><?= htmlspecialchars($producto->getNombre()); ?></span>
-                                <span><?= htmlspecialchars($producto->mostrarDescripcion()); ?></span>
+                                <span class="product-name"><?= $producto->getNombre(); ?></span>
+                                <span><?= $producto->mostrarDescripcion(); ?></span>
                                 <span>Cantidad: <?= $item['cantidad']; ?></span>
                             </div>
                             <div class="cart-item-actions">
                                 <form method="POST" action="" style="display:inline;">
-                                    <input type="hidden" name="id_disminuir" value="<?= htmlspecialchars($producto->getId()); ?>">
+                                    <input type="hidden" name="id_disminuir" value="<?= $producto->getId(); ?>">
                                     <button type="submit">-</button>
                                 </form>
                                 <form method="POST" action="" style="display:inline;">
-                                    <input type="hidden" name="id_aumentar" value="<?= htmlspecialchars($producto->getId()); ?>">
+                                    <input type="hidden" name="id_aumentar" value="<?= $producto->getId(); ?>">
                                     <button style="background-color: #1fa13b;" type="submit">+</button>
                                 </form>
                                 <form method="POST" action="" style="display:inline;">
-                                    <input type="hidden" name="id_eliminar" value="<?= htmlspecialchars($producto->getId()); ?>">
+                                    <input type="hidden" name="id_eliminar" value="<?= $producto->getId(); ?>">
                                     <button type="submit">Eliminar</button>
                                 </form>
                             </div>
