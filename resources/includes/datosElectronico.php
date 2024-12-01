@@ -14,7 +14,6 @@ echo "<h3>Electrónicos</h3>";
 echo "<div class='product-list'>";
 foreach ($electronico as $item) {
     echo "<div class='product-card'>
-            <img src='img/electronico.jpg' alt='Imagen de electrónico'>
             <h4>{$item['productos_nombre']}</h4>
             <p>Modelo: {$item['electronico_modelo']}</p>
             <p class='price'>Precio: {$item['productos_precio']}€</p>

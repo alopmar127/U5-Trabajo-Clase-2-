@@ -240,9 +240,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST
 
     <h1>Usuarios</h1>
 
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="table-header">
             <tr>
+                <th></th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
             </tr>
@@ -255,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST
                     <td><?php echo $usuario['nombre']; ?></td>
                     <td><?php echo $usuario['apellidos']; ?></td>
                     <td>
-                        <form method="POST" action="usuarios">
+                        <form method="POST" action="usuarios" class="delete-form">
                             <input type="hidden" name="id" value="<?php echo $usuario['id']; ?>">
                             <input type="hidden" name="eliminarUsuario" value="eliminarUsuario">
                             <input type="submit" name="Eliminar" value="Eliminar">
@@ -290,139 +291,161 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST
 
     ?>
     <?php if ($mensajeTotal): ?>
-        <p><?= $mensajeTotal ?></p>
+        <p class="section"><?= $mensajeTotal ?></p>
     <?php endif; ?>
     <br>
     <br>
-    <h2>Crear Usuario</h2>
-    <!-- Creamos un formulario para insertar un nuevo usuario -->
-    <form method="POST" action="usuarios">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-        <br>
-        <label for="apellidos">Apellidos:</label>
-        <input type="text" name="apellidos" id="apellidos" required>
-        <input type="hidden" name="insertarUsuario" value="insertarUsuario">
-        <br>
-        <input type="submit" value="Crear Usuario">
-    </form>
-    <?php if ($mensajeInsertar): ?>
-        <p><?= $mensajeInsertar ?></p>
-    <?php endif; ?>
-    <br>
-    <br>
-    <h2>Crear Usuario con procedimientos</h2>
-    <!-- Creamos un formulario para insertar un nuevo usuario -->
-    <form method="POST" action="usuarios">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-        <br>
-        <label for="apellidos">Apellidos:</label>
-        <input type="text" name="apellidos" id="apellidos" required>
-        <input type="hidden" name="insertarProce" value="insertarProce">
-        <br>
-        <input type="submit" value="Crear Usuario">
-    </form>
-    <?php if ($mensajeInsertarProce): ?>
-        <p><?= $mensajeInsertarProce ?></p>
-    <?php endif; ?>
-    <br>
-    <h2>Modificar Usuario</h2>
-    <!-- Modificar usuario -->
-    <form method="POST" action="usuarios">
-        <label for="id">Id:</label>
-        <input type="text" name="id" id="id" required>
-        <br>
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-        <br>
-        <label for="apellidos">Apellidos:</label>
-        <input type="text" name="apellidos" id="apellidos" required>
-        <br>
-        <input type="hidden" name="actualizarUsuario" value="actualizarUsuario">
-        <input type="submit" value="Modificar Usuario">
-    </form>
-    <?php if ($mensajeActualizar): ?>
-        <p><?= $mensajeActualizar ?></p>
-    <?php endif; ?>
+    <div class="form-container">
 
-    <h2>Buscar Usuario por ID con transacciones</h2>
-    <form method="POST" action="usuarios">
-        <label for="id">Id:</label>
-        <input type="text" name="id" id="id" required>
-        <input type="hidden" name="buscartrans" id="buscartrans" required>
-        <br>
-        <input type="submit" value="Buscar Usuario">
-    </form>
-    <br>
-    <!-- Si la variable $buscartransa no es null mostramos los datos -->
-    <?php if ($mensajeTransa): ?>
-        <p><?= $mensajeTransa ?></p>
-    <?php endif; ?>
-
-    <h2>Buscar Usuario por ID</h2>
-    <form method="POST" action="usuarios">
-        <label for="id">Id:</label>
-        <input type="text" name="id" id="id" required>
-        <input type="hidden" name="buscarid" id="buscarid" required>
-        <br>
-        <input type="submit" value="Buscar Usuario">
-    </form>
-    <!-- Si la variable $find no es null mostramos los datos -->
-    <?php if ($find): ?>
-        <h2>Datos del Usuario</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><?php echo $find['id']; ?></td>
-                    <td><?php echo $find['nombre']; ?></td>
-                    <td><?php echo $find['apellidos']; ?></td>
-                </tr>
-            </tbody>
-        </table>
-    <?php endif; ?>
-
+        <h2>Crear Usuario</h2>
+        <!-- Creamos un formulario para insertar un nuevo usuario -->
+        <form method="POST" action="usuarios" class="delete-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <br>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="apellidos" required>
+            <input type="hidden" name="insertarUsuario" value="insertarUsuario">
+            <br>
+            <input type="submit" value="Crear Usuario">
+        </form>
+        <?php if ($mensajeInsertar): ?>
+            <p><?= $mensajeInsertar ?></p>
+        <?php endif; ?>
+    </div>
 
     <br>
-    <h2>Buscar por nombre con LIKE</h2>
-    <form method="POST" action="usuarios">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-        <input type="hidden" name="buscarPorNombre" value="buscarPorNombre">
-        <br>
-        <input type="submit" value="Buscar Usuario">
-    </form>
-    <?php if ($mensajeBuscar): ?>
-        <p><?= $mensajeBuscar ?></p>
-    <?php endif; ?>
     <br>
-    <?php if ($datosbuscados): ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($datosbuscados as $usuario): ?>
+    <div class="form-container">
+
+        <h2>Crear Usuario con procedimientos</h2>
+        <!-- Creamos un formulario para insertar un nuevo usuario -->
+        <form method="POST" action="usuarios" class="delete-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <br>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="apellidos" required>
+            <input type="hidden" name="insertarProce" value="insertarProce">
+            <br>
+            <input type="submit" value="Crear Usuario">
+        </form>
+        <?php if ($mensajeInsertarProce): ?>
+            <p><?= $mensajeInsertarProce ?></p>
+        <?php endif; ?>
+    </div>
+
+    <br>
+    <div class="form-container">
+
+        <h2>Modificar Usuario</h2>
+        <!-- Modificar usuario -->
+        <form method="POST" action="usuarios" class="delete-form">
+            <label for="id">Id:</label>
+            <input type="text" name="id" id="id" required>
+            <br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <br>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="apellidos" required>
+            <br>
+            <input type="hidden" name="actualizarUsuario" value="actualizarUsuario">
+            <input type="submit" value="Modificar Usuario">
+        </form>
+        <?php if ($mensajeActualizar): ?>
+            <p><?= $mensajeActualizar ?></p>
+        <?php endif; ?>
+    </div>
+
+<br>
+    <div class="form-container">
+
+        <h2>Buscar Usuario por ID con transacciones</h2>
+        <form method="POST" action="usuarios" class="delete-form">
+            <label for="id">Id:</label>
+            <input type="text" name="id" id="id" required>
+            <input type="hidden" name="buscartrans" id="buscartrans" required>
+            <br>
+            <input type="submit" value="Buscar Usuario">
+        </form>
+        <br>
+        <!-- Si la variable $buscartransa no es null mostramos los datos -->
+        <?php if ($mensajeTransa): ?>
+            <p><?= $mensajeTransa ?></p>
+        <?php endif; ?>
+    </div>
+    <br>
+    <div class="form-container">
+
+        <h2>Buscar Usuario por ID</h2>
+        <form method="POST" action="usuarios" class="delete-form">
+            <label for="id">Id:</label>
+            <input type="text" name="id" id="id" required>
+            <input type="hidden" name="buscarid" id="buscarid" required>
+            <br>
+            <input type="submit" value="Buscar Usuario">
+        </form>
+        <!-- Si la variable $find no es null mostramos los datos -->
+        <?php if ($find): ?>
+            <h2>Datos del Usuario</h2>
+            <table class="table">
+                <thead class="table-header">
                     <tr>
-                        <td><?php echo $usuario['id']; ?></td>
-                        <td><?php echo $usuario['nombre']; ?></td>
-                        <td><?php echo $usuario['apellidos']; ?></td>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php endif; ?>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $find['id']; ?></td>
+                        <td><?php echo $find['nombre']; ?></td>
+                        <td><?php echo $find['apellidos']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
+
+
+    <br>
+    <div class="form-container">
+
+        <h2>Buscar por nombre con LIKE</h2>
+        <form method="POST" action="usuarios" class="delete-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <input type="hidden" name="buscarPorNombre" value="buscarPorNombre">
+            <br>
+            <input type="submit" value="Buscar Usuario">
+        </form>
+
+        <?php if ($mensajeBuscar): ?>
+            <p><?= $mensajeBuscar ?></p>
+        <?php endif; ?>
+        <br>
+        <?php if ($datosbuscados): ?>
+            <table class="table">
+                <thead class="table-header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($datosbuscados as $usuario): ?>
+                        <tr>
+                            <td><?php echo $usuario['id']; ?></td>
+                            <td><?php echo $usuario['nombre']; ?></td>
+                            <td><?php echo $usuario['apellidos']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
 
     <footer>
         <?php require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'footer.php'; ?>

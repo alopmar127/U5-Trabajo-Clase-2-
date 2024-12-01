@@ -14,7 +14,6 @@ echo "<h3>Comida</h3>";
 echo "<div class='product-list'>";
 foreach ($comida as $item) {
     echo "<div class='product-card'>
-            <img src='img/comida.jpg' alt='Imagen de comida'>
             <h4>{$item['productos_nombre']}</h4>
             <p>Caducidad: {$item['comida_caducidad']}</p>
             <p class='price'>Precio: {$item['productos_precio']}€</p>
